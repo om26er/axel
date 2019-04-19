@@ -1,0 +1,31 @@
+name: axel
+base: core18
+version: latest
+version-script: git describe --always --tags | sed -e 's/-/+git/;y/-/./' | tail -c +2
+summary: Light command line download accelerator
+description: |
+  Light command line download accelerator
+
+grade: stable
+confinement: strict
+
+parts:
+  axel:
+    plugin: autotools
+    source: .
+    build-packages:
+      - pkg-config
+      - gettext
+      - autopoint
+      - libssl-dev
+      # For versioning
+      - git
+    stage-packages:
+      - libssl1.1
+
+apps:
+  axel:
+    command: axel
+    plugs:
+      - network
+      - home
